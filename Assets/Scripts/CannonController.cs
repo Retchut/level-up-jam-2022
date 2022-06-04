@@ -21,13 +21,17 @@ public class CannonController : MonoBehaviour
     {
         mousePosition = Input.mousePosition;
 
-        Vector2 cannonToMouse = Camera.main.ScreenToWorldPoint(mousePosition) - this.transform.position;
-        cannonToMouse.Normalize();
-
-        float rotation = Mathf.Atan2(cannonToMouse.y, cannonToMouse.x) * Mathf.Rad2Deg - 90;
+        float rotation = getCannonAngle();
         transform.rotation = Quaternion.Euler(0f, 0f, rotation);
 
         handleInput();
+    }
+
+    float getCannonAngle(){
+        Vector2 cannonToMouse = Camera.main.ScreenToWorldPoint(mousePosition) - this.transform.position;
+        cannonToMouse.Normalize();
+
+        return Mathf.Atan2(cannonToMouse.y, cannonToMouse.x) * Mathf.Rad2Deg - 90;
     }
 
     void handleInput()
@@ -41,5 +45,8 @@ public class CannonController : MonoBehaviour
     void shoot()
     {
         GameObject clone = Instantiate(bulletPrefab, cannonBarrel.position, cannonBarrel.rotation);
+        Rigidbody2D cloneRB = clone.GetComponent<Rigidbody2D>();
+        //float forceX = 
+        cloneRB.AddForce(new Vector2(50, 15), ForceMode2D.Impulse);
     }
 }
