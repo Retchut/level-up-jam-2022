@@ -3485,6 +3485,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 5727508719804801474, guid: a5dfab6c1ea8d1b4abfdbbd85e519e44, type: 3}
   cannonBarrel: {fileID: 646208847}
+  projectiles:
+  - {fileID: 21300000, guid: e473ebbb9441ef64288ae5a551dc3570, type: 3}
+  - {fileID: 21300000, guid: 70d4893777d9d414cb1a1830ba0e77cc, type: 3}
+  - {fileID: 21300000, guid: bddd23ef89ad68e45af0f7c2d5902f78, type: 3}
+  - {fileID: 21300000, guid: 6dd29e7443d5f7846a006985a6130a85, type: 3}
+  - {fileID: 21300000, guid: 9af29424b024a1848bfa3504b389185a, type: 3}
+  - {fileID: 21300000, guid: 31cbc514ee217d64d88945272e0ea705, type: 3}
 --- !u!1 &1837668621
 GameObject:
   m_ObjectHideFlags: 0
