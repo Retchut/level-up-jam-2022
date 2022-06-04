@@ -12,11 +12,8 @@ public class CannonController : MonoBehaviour
     public Transform cannonBarrel;
 
     private float force = 10;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
+    public Sprite[] projectiles;
 
     // Update is called once per frame
     void Update()
@@ -47,11 +44,24 @@ public class CannonController : MonoBehaviour
     void shoot()
     {
         GameObject clone = Instantiate(bulletPrefab, cannonBarrel.position, cannonBarrel.rotation);
+        clone.GetComponent<SpriteRenderer>().sprite = getNextProjectileSprite();
         Rigidbody2D cloneRB = clone.GetComponent<Rigidbody2D>();
 
+        cloneRB.AddForce(calculateProjectileForce(), ForceMode2D.Impulse);
+    }
+
+    Vector2 calculateProjectileForce()
+    {
         float barrelAngleRad = getCannonAngle() * Mathf.Deg2Rad;
         float forceX = force * Mathf.Cos(barrelAngleRad);
         float forceY = force * Mathf.Sin(barrelAngleRad);
-        cloneRB.AddForce(new Vector2(forceX, forceY), ForceMode2D.Impulse);
+        return new Vector2(forceX, forceY);
+    }
+
+    Sprite getNextProjectileSprite()
+    {
+        int itemIndex = Random.Range(0, projectiles.Length);
+
+        return projectiles[itemIndex];
     }
 }
