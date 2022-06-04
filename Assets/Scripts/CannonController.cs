@@ -10,6 +10,8 @@ public class CannonController : MonoBehaviour
 
     public GameObject bulletPrefab;
     public Transform cannonBarrel;
+
+    private float force = 10;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,7 +48,10 @@ public class CannonController : MonoBehaviour
     {
         GameObject clone = Instantiate(bulletPrefab, cannonBarrel.position, cannonBarrel.rotation);
         Rigidbody2D cloneRB = clone.GetComponent<Rigidbody2D>();
-        //float forceX = 
-        cloneRB.AddForce(new Vector2(50, 15), ForceMode2D.Impulse);
+
+        float barrelAngleRad = getCannonAngle() * Mathf.Deg2Rad;
+        float forceX = force * Mathf.Cos(barrelAngleRad);
+        float forceY = force * Mathf.Sin(barrelAngleRad);
+        cloneRB.AddForce(new Vector2(forceX, forceY), ForceMode2D.Impulse);
     }
 }
