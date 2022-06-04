@@ -5,17 +5,18 @@ using UnityEngine;
 public class CannonController : MonoBehaviour
 {
     enum mouseButtons {PRIMARY, SECONDARY, MIDDLE}
-    private const float PROJECTILE_RANDOM_TORQUE_MIN = 25;
-    private const float PROJECTILE_RANDOM_TORQUE_MAX = 1000;
-
-
+    private const float PROJECTILE_RANDOM_TORQUE_MIN = 25f;
+    private const float PROJECTILE_RANDOM_TORQUE_MAX = 1000f;
+    private const float PROJECTILE_MIN_FORCE = 1f;
+    private const float PROJECTILE_MAX_FORCE = 100f;
+    private const float PROJECTILE_FORCE_INCREMENT = 0.1f;
+    private float force = PROJECTILE_MIN_FORCE;
 
     private Vector3 mousePosition;
 
     public GameObject bulletPrefab;
     public Transform cannonBarrel;
 
-    private float force = 10;
 
     public Sprite[] projectiles;
 
@@ -28,7 +29,6 @@ public class CannonController : MonoBehaviour
 
         float rotation = getCannonAngle();
         transform.rotation = Quaternion.Euler(0f, 0f, rotation);
-
         handleInput();
     }
 
@@ -41,24 +41,31 @@ public class CannonController : MonoBehaviour
 
     void handleInput()
     {
-        if (Input.GetMouseButtonDown((int)mouseButtons.PRIMARY))
+        if (Input.GetMouseButton((int)mouseButtons.PRIMARY))
         {
-            shoot();
+            if (force <= PROJECTILE_MAX_FORCE)
+            {
+                force += PROJECTILE_FORCE_INCREMENT;
+            }
         }  
+        else if (Input.GetMouseButtonUp((int)mouseButtons.PRIMARY)){
+            shoot(force);
+            force = PROJECTILE_MIN_FORCE;
+        }
     }
 
-    void shoot()
+    void shoot(float force)
     {
         GameObject clone = Instantiate(bulletPrefab, cannonBarrel.position, cannonBarrel.rotation);
         clone.GetComponent<SpriteRenderer>().sprite = getNextProjectileSprite();
         Rigidbody2D cloneRB = clone.GetComponent<Rigidbody2D>();
 
-        cloneRB.AddForce(calculateProjectileForce(), ForceMode2D.Impulse);
+        cloneRB.AddForce(calculateProjectileForceVector(force), ForceMode2D.Impulse);
 
         cloneRB.AddTorque(Random.Range(PROJECTILE_RANDOM_TORQUE_MIN, PROJECTILE_RANDOM_TORQUE_MAX));
     }
 
-    Vector2 calculateProjectileForce()
+    Vector2 calculateProjectileForceVector(float force)
     {
         float barrelAngleRad = getCannonAngle() * Mathf.Deg2Rad;
         float forceX = force * Mathf.Cos(barrelAngleRad);
