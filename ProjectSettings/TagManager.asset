@@ -44,6 +44,12 @@ TagManager:
   - name: Background
     uniqueID: 1430123601
     locked: 0
+  - name: Cannon
+    uniqueID: 2204213515
+    locked: 0
+  - name: CannonWheel
+    uniqueID: 3072419209
+    locked: 0
   - name: Entities
     uniqueID: 2520673977
     locked: 0

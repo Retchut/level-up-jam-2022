@@ -31,7 +31,7 @@ public class CannonController : MonoBehaviour
         Vector2 cannonToMouse = Camera.main.ScreenToWorldPoint(mousePosition) - this.transform.position;
         cannonToMouse.Normalize();
 
-        return Mathf.Atan2(cannonToMouse.y, cannonToMouse.x) * Mathf.Rad2Deg - 90;
+        return Mathf.Atan2(cannonToMouse.y, cannonToMouse.x) * Mathf.Rad2Deg;
     }
 
     void handleInput()
