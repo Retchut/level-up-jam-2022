@@ -5,6 +5,10 @@ using UnityEngine;
 public class CannonController : MonoBehaviour
 {
     enum mouseButtons {PRIMARY, SECONDARY, MIDDLE}
+    private const float PROJECTILE_RANDOM_TORQUE_MIN = 25;
+    private const float PROJECTILE_RANDOM_TORQUE_MAX = 1000;
+
+
 
     private Vector3 mousePosition;
 
@@ -14,6 +18,8 @@ public class CannonController : MonoBehaviour
     private float force = 10;
 
     public Sprite[] projectiles;
+
+    public float testing = 1000;
 
     // Update is called once per frame
     void Update()
@@ -49,7 +55,7 @@ public class CannonController : MonoBehaviour
 
         cloneRB.AddForce(calculateProjectileForce(), ForceMode2D.Impulse);
 
-        cloneRB.AddTorque(Random.Range(25, 500));
+        cloneRB.AddTorque(Random.Range(PROJECTILE_RANDOM_TORQUE_MIN, PROJECTILE_RANDOM_TORQUE_MAX));
     }
 
     Vector2 calculateProjectileForce()
