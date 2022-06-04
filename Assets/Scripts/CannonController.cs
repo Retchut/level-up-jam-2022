@@ -48,6 +48,8 @@ public class CannonController : MonoBehaviour
         Rigidbody2D cloneRB = clone.GetComponent<Rigidbody2D>();
 
         cloneRB.AddForce(calculateProjectileForce(), ForceMode2D.Impulse);
+
+        cloneRB.AddTorque(Random.Range(25, 500));
     }
 
     Vector2 calculateProjectileForce()
