@@ -19,7 +19,6 @@ public class RatController : MonoBehaviour
     {
         if (fadeOut)
         {
-            //this.spriteRenderer.color -= FADE_AMOUNT;
             Color oldColor = this.spriteRenderer.color;
             Color newColor = new Color(oldColor.r, oldColor.g, oldColor.b, oldColor.a - FADE_AMOUNT * Time.deltaTime);
             this.spriteRenderer.color = newColor;

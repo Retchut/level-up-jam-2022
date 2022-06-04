@@ -39,7 +39,7 @@ public class RatSpawner : MonoBehaviour
         float xMin = platforms[platform].transform.position.x - platformLength / 2;
         float xMax = platforms[platform].transform.position.y + platformLength / 2;
         float posX = Random.Range(xMin, xMax);
-        float posY = platforms[platform].transform.position.y + 1;
+        float posY = platforms[platform].transform.position.y + 0.3f;
 
         return new Vector2(posX, posY);
     }
