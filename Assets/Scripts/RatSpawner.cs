@@ -15,6 +15,7 @@ public class RatSpawner : MonoBehaviour
         platforms = new List<Transform>();
         foreach(Transform t in transform){
             platforms.Add(t);
+            t.GetComponent<SpriteRenderer>().enabled = false;
         }
         StartCoroutine(spawnRat());
     }
