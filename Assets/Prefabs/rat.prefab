@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2390010351943993969}
   - component: {fileID: 2917780831882544797}
   - component: {fileID: 980621071935468435}
-  - component: {fileID: -9102235963380343331}
+  - component: {fileID: 1451821674081335732}
   m_Layer: 7
   m_Name: rat
   m_TagString: Untagged
@@ -128,7 +128,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &-9102235963380343331
+--- !u!61 &1451821674081335732
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,5 +152,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 24.806347, y: 26.119999}
+  m_Size: {x: 12.96, y: 16.23}
   m_EdgeRadius: 0
