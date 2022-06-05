@@ -25,6 +25,11 @@ public class RatSpawner : MonoBehaviour
     [HideInInspector] public int ratCount = 0;
     public TMP_Text ratText;
 
+    void Awake()
+    {
+        GameObject.FindGameObjectWithTag("Music").GetComponent<MusicController>().PlayMusic();
+    }
+
     // Start is called before the first frame update
     void Start()
     {

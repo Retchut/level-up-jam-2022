@@ -7,6 +7,7 @@ TagManager:
   - Platform
   - Projectile
   - Rat
+  - Music
   layers:
   - Default
   - TransparentFX
