@@ -8,8 +8,10 @@ public class RatController : MonoBehaviour
     private Collider2D collider;
     private SpriteRenderer spriteRenderer;
     public RuntimeAnimatorController deathAnimatorController;
+    private bool died = false;
     private bool fadeOut = false;
     private const float FADE_AMOUNT = 2f;
+
 
     public RatSpawner ratSpawnerScript;
 
@@ -40,7 +42,11 @@ public class RatController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Projectile")){
-            StartCoroutine(die());
+            if (!died)
+            {
+                died = true;
+                StartCoroutine(die());
+            }
         }
     }
 
