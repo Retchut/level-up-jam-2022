@@ -12,6 +12,10 @@ public class CannonController : MonoBehaviour
     private const float PROJECTILE_FORCE_INCREMENT = 0.1f;
     private float force = PROJECTILE_MIN_FORCE;
 
+    public RuntimeAnimatorController idleAnimController;
+    public RuntimeAnimatorController fireAnimController;
+    public GameObject grannyGO;
+
     private Vector3 mousePosition;
 
     public GameObject bulletPrefab;
@@ -49,9 +53,18 @@ public class CannonController : MonoBehaviour
             }
         }  
         else if (Input.GetMouseButtonUp((int)mouseButtons.PRIMARY)){
+            Coroutine grannyCoroutine = StartCoroutine(changeGrannyAnim());
             shoot(force);
             force = PROJECTILE_MIN_FORCE;
         }
+    }
+
+    IEnumerator changeGrannyAnim()
+    {
+        Animator anim = grannyGO.GetComponent<Animator>();
+        anim.runtimeAnimatorController = fireAnimController;
+        yield return new WaitForSeconds(fireAnimController.animationClips[0].length);
+        anim.runtimeAnimatorController = idleAnimController;
     }
 
     void shoot(float force)
