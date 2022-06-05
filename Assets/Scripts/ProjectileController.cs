@@ -2,51 +2,57 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RatController : MonoBehaviour
+public class ProjectileController : MonoBehaviour
 {
-    private Collider2D collider;
     private SpriteRenderer spriteRenderer;
-    public RuntimeAnimatorController deathAnimatorController;
     private bool fadeOut = false;
     private const float FADE_AMOUNT = 2f;
 
+    // Start is called before the first frame update
     void Start()
     {
-        collider = this.GetComponent<Collider2D>();
         spriteRenderer = this.GetComponent<SpriteRenderer>();
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
         if (fadeOut)
         {
+            Debug.Log("fading");
             Color oldColor = this.spriteRenderer.color;
             Color newColor = new Color(oldColor.r, oldColor.g, oldColor.b, oldColor.a - FADE_AMOUNT * Time.deltaTime);
             this.spriteRenderer.color = newColor;
+            Debug.Log("faded");
 
             if (this.spriteRenderer.color.a <= 0)
             {
                 fadeOut = false;
-                Destroy(this.gameObject);
+                destroyProjectile();
             }
         }
+        checkIfLeftTheScreen();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Projectile")){
-            StartCoroutine(die());
+        if (collision.gameObject.CompareTag("Rat"))
+        {
+            this.fadeOut = true;
         }
     }
 
-    private IEnumerator die()
+    private void checkIfLeftTheScreen()
     {
-        Animator anim = this.GetComponent<Animator>();
-        anim.runtimeAnimatorController = deathAnimatorController;
-        //TODO: change to dead sprite
-        //TODO: play death animation of rat
-        //TODO: play death sound
-        yield return new WaitForSeconds(2);
-        this.fadeOut = true;
+        Renderer renderer = this.GetComponent<Renderer>();
+        if(!renderer.isVisible)
+        {
+            destroyProjectile();
+        }
+    }
+
+    private void destroyProjectile()
+    {
+        Destroy(this.gameObject);
     }
 }
