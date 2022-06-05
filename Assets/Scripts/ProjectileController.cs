@@ -19,11 +19,9 @@ public class ProjectileController : MonoBehaviour
     {
         if (fadeOut)
         {
-            Debug.Log("fading");
             Color oldColor = this.spriteRenderer.color;
             Color newColor = new Color(oldColor.r, oldColor.g, oldColor.b, oldColor.a - FADE_AMOUNT * Time.deltaTime);
             this.spriteRenderer.color = newColor;
-            Debug.Log("faded");
 
             if (this.spriteRenderer.color.a <= 0)
             {

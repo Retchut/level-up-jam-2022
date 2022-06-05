@@ -43,8 +43,6 @@ public class RatController : MonoBehaviour
     {
         Animator anim = this.GetComponent<Animator>();
         anim.runtimeAnimatorController = deathAnimatorController;
-        //TODO: change to dead sprite
-        //TODO: play death animation of rat
         //TODO: play death sound
         yield return new WaitForSeconds(2);
         this.fadeOut = true;

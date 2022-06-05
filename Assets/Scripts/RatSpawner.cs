@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class RatSpawner : MonoBehaviour
 {
+    private const float DECREMENT_COOLDOWN = 5f;
+    private const float SPAWN_TIMER_DECREMENT = 0.25f;
+    private const float SPAWN_TIMER_MIN = 0.5f;
+    private const float SPAWN_TIMER_START= 5f;
+
     private List<Transform> platforms;
     public GameObject ratPrefab;
     private bool lost = false;
     private float platformLength = 1.22f;
+    private float spawnTimer = SPAWN_TIMER_START;
+
+    private Coroutine reduceTimerCoroutine;
 
     // Start is called before the first frame update
     void Start()
@@ -17,18 +25,16 @@ public class RatSpawner : MonoBehaviour
             platforms.Add(t);
             t.GetComponent<SpriteRenderer>().enabled = false;
         }
-        StartCoroutine(spawnRat());
+        spawnRat();
+        StartCoroutine(ratSpawner());
+        reduceTimerCoroutine = StartCoroutine(reduceTimer());
     }
 
-    IEnumerator spawnRat()
+    private void Update()
     {
-        while (!lost) {
-            yield return new WaitForSeconds(1f);
-            if (!GameObject.Find("rat(Clone)")) {
-                Vector2 position = choosePosition();
-
-                Instantiate(ratPrefab, position, Quaternion.Euler(0,0,0));
-            }
+        if (spawnTimer <= SPAWN_TIMER_MIN)
+        {
+            StopCoroutine(reduceTimerCoroutine);
         }
     }
 
@@ -42,5 +48,30 @@ public class RatSpawner : MonoBehaviour
         float posY = platforms[platform].transform.position.y + 0.3f;
 
         return new Vector2(posX, posY);
+    }
+
+    private void spawnRat()
+    {
+        Vector2 position = choosePosition();
+        Instantiate(ratPrefab, position, Quaternion.Euler(0, 0, 0));
+    }
+
+    IEnumerator ratSpawner()
+    {
+        while(!lost)
+        {
+            yield return new WaitForSeconds(spawnTimer);
+            spawnRat();
+            Debug.Log("spawn timer: " + spawnTimer);
+        }
+    }
+
+    IEnumerator reduceTimer()
+    {
+        while(!lost)
+        {
+            yield return new WaitForSeconds(DECREMENT_COOLDOWN);
+            spawnTimer -= SPAWN_TIMER_DECREMENT;
+        }
     }
 }
