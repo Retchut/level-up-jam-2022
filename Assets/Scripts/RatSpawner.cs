@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class RatSpawner : MonoBehaviour
 {
@@ -9,6 +11,9 @@ public class RatSpawner : MonoBehaviour
     private const float SPAWN_TIMER_MIN = 0.5f;
     private const float SPAWN_TIMER_START= 5f;
 
+    private const int MAX_RAT_COUNT = 10;
+    private const int MENU_SCENE = 0;
+
     private List<Transform> platforms;
     public GameObject ratPrefab;
     private bool lost = false;
@@ -16,6 +21,9 @@ public class RatSpawner : MonoBehaviour
     private float spawnTimer = SPAWN_TIMER_START;
 
     private Coroutine reduceTimerCoroutine;
+
+    [HideInInspector] public int ratCount = 0;
+    public TMP_Text ratText;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +44,28 @@ public class RatSpawner : MonoBehaviour
         {
             StopCoroutine(reduceTimerCoroutine);
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            loseGame();
+        }
+        ratText.text = "Rats Alive: " + ratCount.ToString() + "/10";
+        checkLoss();
+    }
+
+    private void checkLoss()
+    {
+        if(ratCount > MAX_RAT_COUNT)
+        {
+            Debug.Log("should lose");
+            lost = true;
+            loseGame();
+        }
+    }
+
+    private void loseGame()
+    {
+        Debug.Log("should be losing");
+        SceneManager.LoadScene(MENU_SCENE);
     }
 
     private Vector2 choosePosition()
@@ -53,7 +83,9 @@ public class RatSpawner : MonoBehaviour
     private void spawnRat()
     {
         Vector2 position = choosePosition();
-        Instantiate(ratPrefab, position, Quaternion.Euler(0, 0, 0));
+        GameObject childRat = Instantiate(ratPrefab, position, Quaternion.Euler(0, 0, 0));
+        ratCount++;
+        childRat.GetComponent<RatController>().ratSpawnerScript = this;
     }
 
     IEnumerator ratSpawner()

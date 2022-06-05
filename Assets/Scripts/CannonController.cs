@@ -24,7 +24,7 @@ public class CannonController : MonoBehaviour
 
     public Sprite[] projectiles;
 
-    public int score = 0;
+    [HideInInspector] public int score = 0;
     public TMP_Text scoreText;
 
     // Update is called once per frame
@@ -78,7 +78,6 @@ public class CannonController : MonoBehaviour
         cloneRB.gameObject.GetComponent<ProjectileController>().cannonController = this;
 
         cloneRB.AddForce(calculateProjectileForceVector(force), ForceMode2D.Impulse);
-
         cloneRB.AddTorque(Random.Range(PROJECTILE_RANDOM_TORQUE_MIN, PROJECTILE_RANDOM_TORQUE_MAX));
     }
 

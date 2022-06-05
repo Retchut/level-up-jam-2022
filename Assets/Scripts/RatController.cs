@@ -11,6 +11,8 @@ public class RatController : MonoBehaviour
     private bool fadeOut = false;
     private const float FADE_AMOUNT = 2f;
 
+    public RatSpawner ratSpawnerScript;
+
     void Start()
     {
         collider = this.GetComponent<Collider2D>();
@@ -45,6 +47,7 @@ public class RatController : MonoBehaviour
         Animator anim = this.GetComponent<Animator>();
         anim.runtimeAnimatorController = deathAnimatorController;
         //TODO: play death sound
+        ratSpawnerScript.ratCount--;
         yield return new WaitForSeconds(2);
         this.fadeOut = true;
     }
