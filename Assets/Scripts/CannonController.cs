@@ -27,8 +27,10 @@ public class CannonController : MonoBehaviour
     [HideInInspector] public int score = 0;
     public TMP_Text scoreText;
 
-    // Update is called once per frame
-    void Update()
+    public AudioSource shootSound;
+
+// Update is called once per frame
+void Update()
     {
         mousePosition = Input.mousePosition;
 
@@ -71,6 +73,7 @@ public class CannonController : MonoBehaviour
 
     void shoot(float force)
     {
+        shootSound.Play();
         GameObject clone = Instantiate(bulletPrefab, cannonBarrel.position, cannonBarrel.rotation);
         clone.GetComponent<SpriteRenderer>().sprite = getNextProjectileSprite();
         Rigidbody2D cloneRB = clone.GetComponent<Rigidbody2D>();

@@ -13,6 +13,8 @@ public class RatController : MonoBehaviour
 
     public RatSpawner ratSpawnerScript;
 
+    public AudioSource deathSound;
+
     void Start()
     {
         collider = this.GetComponent<Collider2D>();
@@ -44,9 +46,12 @@ public class RatController : MonoBehaviour
 
     private IEnumerator die()
     {
+        if (!deathSound.isPlaying)
+        {
+            deathSound.Play();
+        }
         Animator anim = this.GetComponent<Animator>();
         anim.runtimeAnimatorController = deathAnimatorController;
-        //TODO: play death sound
         ratSpawnerScript.ratCount--;
         yield return new WaitForSeconds(2);
         this.fadeOut = true;
