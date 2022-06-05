@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CannonController : MonoBehaviour
 {
@@ -21,10 +22,10 @@ public class CannonController : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform cannonBarrel;
 
-
     public Sprite[] projectiles;
 
-    public float testing = 1000;
+    public int score = 0;
+    public TMP_Text scoreText;
 
     // Update is called once per frame
     void Update()
@@ -34,6 +35,7 @@ public class CannonController : MonoBehaviour
         float rotation = getCannonAngle();
         transform.rotation = Quaternion.Euler(0f, 0f, rotation);
         handleInput();
+        scoreText.text = "Score: " + score.ToString();
     }
 
     float getCannonAngle(){
@@ -72,6 +74,8 @@ public class CannonController : MonoBehaviour
         GameObject clone = Instantiate(bulletPrefab, cannonBarrel.position, cannonBarrel.rotation);
         clone.GetComponent<SpriteRenderer>().sprite = getNextProjectileSprite();
         Rigidbody2D cloneRB = clone.GetComponent<Rigidbody2D>();
+
+        cloneRB.gameObject.GetComponent<ProjectileController>().cannonController = this;
 
         cloneRB.AddForce(calculateProjectileForceVector(force), ForceMode2D.Impulse);
 

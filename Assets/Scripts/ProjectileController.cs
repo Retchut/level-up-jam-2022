@@ -8,6 +8,8 @@ public class ProjectileController : MonoBehaviour
     private bool fadeOut = false;
     private const float FADE_AMOUNT = 2f;
 
+    public CannonController cannonController;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +39,7 @@ public class ProjectileController : MonoBehaviour
         if (collision.gameObject.CompareTag("Rat"))
         {
             this.fadeOut = true;
+            cannonController.score++;
         }
     }
 
