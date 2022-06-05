@@ -53,6 +53,9 @@ TagManager:
   - name: CannonWheel
     uniqueID: 3072419209
     locked: 0
+  - name: Granny
+    uniqueID: 1791697443
+    locked: 0
   - name: Entities
     uniqueID: 2520673977
     locked: 0
