@@ -167,3 +167,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7470507f589c0184a960357de4b2dc25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathAnimatorController: {fileID: 9100000, guid: d02e4d048e7ab4648a59ff22fd68ce24, type: 2}

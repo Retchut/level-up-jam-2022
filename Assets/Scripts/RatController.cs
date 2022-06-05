@@ -6,6 +6,7 @@ public class RatController : MonoBehaviour
 {
     private Collider2D collider;
     private SpriteRenderer spriteRenderer;
+    public RuntimeAnimatorController deathAnimatorController;
     private bool fadeOut = false;
     private const float FADE_AMOUNT = 2f;
 
@@ -41,6 +42,8 @@ public class RatController : MonoBehaviour
 
     private IEnumerator die()
     {
+        Animator anim = this.GetComponent<Animator>();
+        anim.runtimeAnimatorController = deathAnimatorController;
         //TODO: change to dead sprite
         //TODO: play death animation of rat
         //TODO: play death sound
