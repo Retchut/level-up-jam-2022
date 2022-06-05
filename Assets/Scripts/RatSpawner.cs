@@ -62,7 +62,6 @@ public class RatSpawner : MonoBehaviour
         {
             yield return new WaitForSeconds(spawnTimer);
             spawnRat();
-            Debug.Log("spawn timer: " + spawnTimer);
         }
     }
 
